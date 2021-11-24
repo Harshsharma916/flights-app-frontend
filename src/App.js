@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import styled from "styled-components";
+// import Photopages from "./Containers/Photopages";
+import Main from "./Containers/Main";
+
+const Div = styled.div`
+  // height: 100vw;
+  // width: 100vw;
+  padding: 0px;
+  margin: 0px;
+  overflow-x: none;
+  overflow-y: none;
+`
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Div>
+      <Main/>
+    </Div>
   );
 }
 
