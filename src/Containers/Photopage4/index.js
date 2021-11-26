@@ -40,6 +40,23 @@ const Div1 = styled.div`
 const Photopage4 = () => {
   const dispatch = useDispatch();
 
+  function sendMessageToCSharp() {
+    // This object passed to postMessage() automatically gets serialized as JSON
+    // and is emitted via the C# MessageEmitted event. This API mimics the window.postMessage API.
+    if (window.vuplex) {
+      // The window.vuplex object already exists, so go ahead and send the message.
+      send();
+    } else {
+      // The window.vuplex object hasn't been initialized yet because the page is still
+      // loading, so add an event listener to send the message once it's initialized.
+      window.addEventListener('vuplexready', send);
+    }
+  }
+
+  function send(){
+    window.vuplex.postMessage({ type: 'greeting', message: 'Hello from JavaScript!' });
+  }
+
   return (
     <Div>
       <Subdiv>
@@ -47,28 +64,13 @@ const Photopage4 = () => {
         <Div1>
           Flam has recently launched in US for the thanksgiving season.
         </Div1>
-        <Footer number1={3} skip={true} />
+        <Footer
+        number1={3}
+        number2={2}
+        onClick1={() => dispatch({ type: "page4", data: "Page 4 to 3" })}
+        onClick2={() => sendMessageToCSharp()}
+      />
       </Subdiv>
-      {/* <Footer
-        number1={2}
-        number2={4}
-        onClick1={() => dispatch({ type: "page3", data: "Page 3 to 2" })}
-        onClick2={
-          (() => {
-            if (window.vuplex) {
-              // The window.vuplex object already exists, so go ahead and send the message.
-              // console.log('HARSH SHARMA')
-              sendMessageToCSharp();
-            } else {
-              // console.log('HARSH SHARMA')
-              // The window.vuplex object hasn't been initialized yet because the page is still
-              // loading, so add an event listener to send the message once it's initialized.
-              window.addEventListener("vuplexready", sendMessageToCSharp);
-            }
-          },
-          dispatch({ type: "page3", data: "Page 3 to end" }))
-        }
-      /> */}
     </Div>
   );
 };
