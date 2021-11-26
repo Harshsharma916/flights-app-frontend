@@ -22,14 +22,35 @@ const Img = styled.img`
 `;
 const Photopage3 = () => {
   const dispatch = useDispatch();
+
+  function sendMessageToCSharp() {
+    // This object passed to postMessage() automatically gets serialized as JSON
+    // and is emitted via the C# MessageEmitted event. This API mimics the window.postMessage API.
+    window.vuplex.postMessage({
+      type: "greeting",
+      message: "Hello from JavaScript!",
+    });
+  }
   return (
     <Div style={{ height: "100vh", width: "100vw" }}>
       <Img src={p3} />
       <Footer
         number1={2}
         number2={4}
-        onClick1={() => dispatch({ type: 'page3', data: "Page 3 to 2" })}
-        onClick2={() => dispatch({ type: 'page3', data: "Page 3 to end" })}
+        onClick1={() => dispatch({ type: "page3", data: "Page 3 to 2" })}
+        onClick2={
+          (() => {
+            if (window.vuplex) {
+              // The window.vuplex object already exists, so go ahead and send the message.
+              sendMessageToCSharp();
+            } else {
+              // The window.vuplex object hasn't been initialized yet because the page is still
+              // loading, so add an event listener to send the message once it's initialized.
+              window.addEventListener("vuplexready", sendMessageToCSharp);
+            }
+          },
+          dispatch({ type: "page3", data: "Page 3 to end" }))
+        }
       />
     </Div>
   );
