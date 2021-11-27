@@ -1,37 +1,46 @@
 import React from "react";
-import p1 from "../../Images/0.jpg";
-import p2 from "../../Images/1.jpg";
-import p3 from "../../Images/2.jpg";
-import styled from "styled-components";
+import p2 from "../../Images/2.png";
+import backimg from "../../Images/Back.png";
 import Footer from "../Footer";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { Div,Subdiv,Header,Buttons } from "../Photopage1";
 
-const Div = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  background: black;
-`;
-const Img = styled.img`
-  width: 80%;
-  height: 80%;
-  object-fit: contain;
-  border-color: white;
-`;
 const Photopage2 = () => {
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  function sendMessageToCSharp() {
+    if (window.vuplex) {
+      send();
+    } else {
+      window.addEventListener("vuplexready", send);
+    }
+  }
+
+  function send() {
+    window.vuplex.postMessage({
+      type: "greeting",
+      message: "Hello from JavaScript!",
+    });
+  }
 
   return (
-    <Div style={{ height: "100vh", width: "100vw" }}>
-      <Img src={p2} />
-      <Footer
-        number2={3}
-        skip={false}
-        onClick1={() => dispatch({ type: 'page2', data: "Page 2 to 1" })}
-        onClick2={() => dispatch({ type: 'page2', data: "Page 2 to 3" })}
-      />
+    <Div>
+      <Header>
+        <img src={backimg} style={{width:'20px'}} onClick={() => navigate("/")}/>
+        <Buttons onClick={sendMessageToCSharp}>Skip</Buttons>
+      </Header>
+      <Subdiv>
+        <img src={p2} style={{width: '100%'}}/>
+        <Footer
+          heading="Holiday Gift Inside"
+          bodytext="Start a trend by sending your loved ones something new and unique."
+          buttontext="Next"
+          onClick={() => navigate("/page3")}
+        />
+      </Subdiv>
     </Div>
   );
 };

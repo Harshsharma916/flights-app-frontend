@@ -37,9 +37,9 @@ const Endpage = () => {
   return (
     <Div style={{ height: "100vh", width: "100vw" }}>
       <Img src={p4} />
-      <Footer
+      {/* <Footer
         onClick1={() => dispatch({ type: "endpage", data: "end to page 1" })}
-      />
+      /> */}
     </Div>
   );
 };
