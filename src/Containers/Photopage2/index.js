@@ -29,7 +29,7 @@ const Photopage2 = () => {
   return (
     <Div>
       <Header>
-        <img src={backimg} style={{width:'20px'}} onClick={() => navigate("/")}/>
+        <img src={backimg} style={{width:'20px'}} onClick={() => navigate("/page1")}/>
         <Buttons onClick={sendMessageToCSharp}>Skip</Buttons>
       </Header>
       <Subdiv>

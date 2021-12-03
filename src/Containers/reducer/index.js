@@ -1,5 +1,7 @@
 const initialState = {
   data: "",
+  otpData: [],
+  userProfile: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -19,6 +21,16 @@ const reducer = (state = initialState, action) => {
     case "endpage":
       return {
         data: action.data,
+      };
+    case "otpData":
+      return {
+        ...state,
+        otpData: action.data,
+      };
+    case "userProfile":
+      return {
+        ...state,
+        userProfile: action.data,
       };
     default:
       return state;
