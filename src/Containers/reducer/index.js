@@ -1,4 +1,5 @@
 const initialState = {
+  call: "false",
   data: "",
   otpData: [],
   userProfile: [],
@@ -6,6 +7,11 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case "call":
+      return {
+        ...state,
+        call: action.data,
+      };
     case "page1":
       return {
         data: action.data,

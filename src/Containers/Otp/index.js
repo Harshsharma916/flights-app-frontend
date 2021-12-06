@@ -25,6 +25,13 @@ import { message } from "antd";
 import OtpTimer from "otp-timer";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { Apicall } from "../../Components/Apicaller";
+import {
+  checkPinCodeService,
+  verifyOTPService,
+} from "../../services/user-services";
+import { SendMessageToCSharp } from "../../Components/Unitysendmsg";
+import { ReceieveMsgFromCSharp } from "../../Components/Unityrecievemsg";
 
 const Wrapper = styled.div`
   display: flex;
@@ -100,23 +107,38 @@ export function Otp({
         otp: otp,
         callback: "Nothing",
       };
-      axios
-        .post("https://galactus.homingos.com/accounts/check_otp", data)
-        .then(function (response) {
-          const { data, error } = response;
-          console.log(data,'DATA 1');
-          // console.log(ok);
-          if (!error) {
-            console.log('CHECKOTP')
-            // const { token, ...profile } = data.data;
-            // dispatch({ type: "otpData", data: { token: token } });
-            dispatch({ type: "userProfile", data: data.data });
-            navigate("/page1");
-          }
-        })
-        .catch(function (error) {
-          message.error(error);
-        });
+      // axios
+      //   .post("https://galactus.homingos.com/accounts/check_otp", data)
+      //   .then(function (response) {
+      //     const { data, error } = response;
+      //     console.log(data,'DATA 1');
+      //     // console.log(ok);
+      //     if (!error) {
+      //       console.log('CHECKOTP')
+      //       // const { token, ...profile } = data.data;
+      //       // dispatch({ type: "otpData", data: { token: token } });
+      //       dispatch({ type: "userProfile", data: data.data });
+      //       navigate("/page1");
+      //     }
+      //   })
+      //   .catch(function (error) {
+      //     message.error(error);
+      //   });
+      SendMessageToCSharp('VerifyOTP',{otp:otp});
+      const response = ReceieveMsgFromCSharp();      
+      console.log(response?.otpverified);
+      if(response?.otpverified){
+        navigate('/page1')
+      }
+
+      // async function changeroute() {
+      //   let value = await Apicall(verifyOTPService, data).then((data) => data);
+      //   if (!value.error) {
+      //     navigate("/page1");
+      //   }
+      // }
+      // changeroute();
+
     } else {
       message.error("Enter OTP!");
     }

@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { message } from "antd";
+import { Col, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Apicall } from "../../Components/Apicaller";
+import { sendOTPService } from "../../services/user-services";
+import { takeLatest, call, put, select } from "redux-saga/effects";
+import { SendMessageToCSharp } from "../../Components/Unitysendmsg";
 
 const Wrapper = styled.div`
   display: flex;
@@ -38,40 +42,53 @@ const Button = styled.div`
   border-radius: 4px;
 `;
 const Login = () => {
-
-  const token = useSelector((state) => state?.userProfile?.token)
+  const state = useSelector((state) => state);
   const [number, setNumber] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(()=>{
-    if(token){
-      console.log(token)
-      navigate('/page1')
+  useEffect(() => {
+    if (state?.userProfile?.token) {
+      // console.log(token);
+      navigate("/page1");
     }
-  },[])
+  }, []);
 
   function sendotp() {
     if (Number.isInteger(parseInt(number))) {
-      console.log('SENT')
+      console.log("SENT");
       const data = {
         phone_number: number,
         country_code: "+91",
         source: "PHYSICAL_US",
       };
-      axios
-        .post("https://galactus.homingos.com/accounts/send_otp", data)
-        .then(function (response) {
-          // console.log(response);
-          dispatch({ type: "otpData", data: data });
-          console.log('HARSH SHARMA')
-          navigate("/otp");
-        })
-        .catch(function (error) {
-          message.error("Something went wrong");
-        });
+      // axios
+      //   .post("https://galactus.homingos.com/accounts/send_otp", data)
+      //   .then(function (response) {
+      //     // console.log(response);
+      //     dispatch({ type: "otpData", data: data });
+      //     console.log('HARSH SHARMA')
+      //     navigate("/otp");
+      //   })
+      //   .catch(function (error) {
+      //     message.error("Something went wrong");
+      //   });
+      dispatch({ type: "otpData", data: data });
+      SendMessageToCSharp('Login' , data)
+
+      // async function changeroute() {
+      //   const response = await Apicall(sendOTPService, data).then(
+      //     (data) => data
+      //   );
+      //   console.log(response,'two')
+      //   if(!response.error){
+      //     navigate('/otp')
+      //   }
+      // }
+      // changeroute();
+
     } else {
-      console.log('ERROR')
+      console.log("ERROR");
       message.error("Please enter a valid phone number");
     }
   }
@@ -89,7 +106,7 @@ const Login = () => {
         <Title>Enter your phone number to Login</Title>
         <Input
           value={number}
-          type=''
+          type=""
           maxLength={10}
           onChange={(e) => setNumber(e.target.value)}
           placeholder="Your phone number"

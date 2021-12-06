@@ -25,13 +25,13 @@ store.subscribe(()=>{
 
 ReactDOM.render(
   <Provider store={store}>
+    {/* <BrowserRouter> */}
     <HashRouter>
       {/* <React.StrictMode> */}
-      {/* <Provider store={store}> */}
       <App />
-      {/* </Provider> */}
       {/* </React.StrictMode> */}
     </HashRouter>
+    {/* </BrowserRouter> */}
   </Provider>,
   document.getElementById("root")
 );

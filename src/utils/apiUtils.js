@@ -1,14 +1,14 @@
 import { create } from 'apisauce';
-import history from './history';
-import routeConstants from './routeConstants';
+// import history from './history';
+// import routeConstants from './routeConstants';
 // import snakeCase from 'lodash/snakeCase';
 // import camelCase from 'lodash/camelCase';
 // import { mapKeysDeep } from './index';
 
-const { ULTRON_URL } = process.env;
-const PROXY_BASE_URL = process.env.PROXY_BASE_URL;
-const HULK_URL = process.env.HULK_URL;
-const GALACTUS_URL = process.env.GALACTUS_BASE;
+const ULTRON_URL  = process.env.REACT_APP_ULTRON_URL;
+const PROXY_BASE_URL = process.env.REACT_APP_PROXY_BASE_URL;
+const HULK_URL = process.env.REACT_APP_HULK_URL;
+const GALACTUS_URL = process.env.REACT_APP_GALACTUS_BASE;
 const apiClients = {
   ultron: null,
   proxy: null,
