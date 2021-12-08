@@ -80,10 +80,7 @@ export function Otp({
   const [otp, setOtp] = useState("");
   const otpData = useSelector((state) => state.otpData);
   console.log(otpData);
-  // const location = useLocation();
-  // useInjectSaga({ key: "otp", saga });
-  // useInjectSaga({ key: "webengageProvider", saga: webengageSaga });
-  // let timeStamp = new Date().toJSON().split(".").slice(0, -1).toString();
+
   // useEffect(() => {
   //   if (token) {
   //     history.replace(routeConstants.addVideos.route);
@@ -94,6 +91,7 @@ export function Otp({
   //     history.replace(routeConstants.login.route);
   //   }
   // }, [otpData]);
+  
   const onCloseHeader = () => {
     // dispatchClearOtpData();
     dispatch({ type: "clear" });
@@ -124,21 +122,31 @@ export function Otp({
       //   .catch(function (error) {
       //     message.error(error);
       //   });
-      SendMessageToCSharp('VerifyOTP',{otp:otp});
-      const response = ReceieveMsgFromCSharp();      
-      console.log(response?.otpverified);
-      if(response?.otpverified){
-        navigate('/page1')
-      }
-
-      // async function changeroute() {
-      //   let value = await Apicall(verifyOTPService, data).then((data) => data);
-      //   if (!value.error) {
-      //     navigate("/page1");
-      //   }
+      // const response = ReceieveMsgFromCSharp();
+      // console.log(response?.otpverified);
+      // if(response?.otpverified){
+      //   navigate('/page1')
       // }
-      // changeroute();
 
+      async function changeroute() {
+        let value = await Apicall(verifyOTPService, data).then((data) => data);
+        if (!value.error) {
+          if (window.vuplex) {
+            send();
+          } else {
+            window.addEventListener("vuplexready", send);
+          }
+
+          function send() {
+            window.vuplex.postMessage({
+              type: "OTP verification",
+              message: "OTP verified",
+            });
+          }
+          // navigate("/page1");
+        }
+      }
+      changeroute();
     } else {
       message.error("Enter OTP!");
     }

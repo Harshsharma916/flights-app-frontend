@@ -74,19 +74,31 @@ const Login = () => {
       //     message.error("Something went wrong");
       //   });
       dispatch({ type: "otpData", data: data });
-      SendMessageToCSharp('Login' , data)
 
-      // async function changeroute() {
-      //   const response = await Apicall(sendOTPService, data).then(
-      //     (data) => data
-      //   );
-      //   console.log(response,'two')
-      //   if(!response.error){
-      //     navigate('/otp')
-      //   }
-      // }
-      // changeroute();
+      if (window.vuplex) {
+        send();
+      } else {
+        window.addEventListener("vuplexready", send);
+      }
 
+      function send() {
+        window.vuplex.postMessage({
+          type: "Login",
+          message: data,
+        });
+      }
+
+      async function changeroute() {
+        const response = await Apicall(sendOTPService, data).then(
+          (data) => data
+        );
+        console.log(response,'two')
+        if(!response.error){
+          navigate('/otp')
+        }
+      }
+      changeroute();
+      
     } else {
       console.log("ERROR");
       message.error("Please enter a valid phone number");
