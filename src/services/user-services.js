@@ -1,5 +1,5 @@
 import { generateApiClient } from '../utils/apiUtils';
-const ultronAPI = generateApiClient('ultron');
+const ultronAPI = process.env.REACT_APP_ULTRON_URL;
 const proxyAPI = generateApiClient('proxy');
 const hulAPI = generateApiClient('hulk');
 const galactusAPI = process.env.REACT_APP_GALACTUS_BASE;
@@ -7,8 +7,8 @@ const galactusAdminAPI = generateApiClient('galactusAdmin');
 
 export const instagramHackService = () => proxyAPI.get(`/utm_insta`);
 
-export const sendOTPService = galactusAPI + 'accounts/send_otp';
-export const verifyOTPService = galactusAPI + `accounts/check_otp`;
+export const sendOTPService = ultronAPI + '/v2/auth/enc/sendOtp?source=MAGIK';
+export const verifyOTPService =  ultronAPI + '/v2/auth/checkOtp?source=MAGIK';
 export const checkPinCodeService = data => galactusAPI.get(`operations/zip?zip=${data?.pincode}`);
 export const addNewAddressService = data => galactusAPI.post(`operations/address`, data);
 export const updateThemeService = data => galactusAdminAPI.post(`orders/updatetheme`, data);

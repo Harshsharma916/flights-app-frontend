@@ -3,7 +3,7 @@ export function SendMessageToCSharp(type,message) {
     if (window.vuplex) {
       send(type,message);
     } else {
-      window.addEventListener("vuplexready", send);
+      window.addEventListener("vuplexready", send(type,message));
     }
     
     function send(type,message) {

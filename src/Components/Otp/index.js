@@ -23,7 +23,7 @@ function Otp({ otp, setOtp, otpError, borderColor = '#24A0ED' }) {
       }}
       value={otp}
       onChange={setOtp}
-      numInputs={4}
+      numInputs={5}
     />
   );
 }

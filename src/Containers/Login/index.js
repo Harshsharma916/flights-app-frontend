@@ -8,6 +8,7 @@ import { Apicall } from "../../Components/Apicaller";
 import { sendOTPService } from "../../services/user-services";
 import { takeLatest, call, put, select } from "redux-saga/effects";
 import { SendMessageToCSharp } from "../../Components/Unitysendmsg";
+import { encrypt } from '../../utils/encryption';
 
 const Wrapper = styled.div`
   display: flex;
@@ -58,9 +59,19 @@ const Login = () => {
     if (Number.isInteger(parseInt(number))) {
       console.log("SENT");
       const data = {
-        phone_number: number,
-        country_code: "+91",
-        source: "PHYSICAL_US",
+        phoneNumber: number,
+        countryCode: "+91",
+      };
+      const encryptedNumber = encrypt(
+        `${data.phoneNumber}|${Date.now() + 30000}`
+      );
+      console.log("ENCRYPTED_NUMBER", encryptedNumber, encryptedNumber.length);
+      const encdata = {
+        data: {
+          // phone_number: Number(action.data?.phoneNumber),
+          phoneNumber: encryptedNumber,
+          countryCode: data.countryCode,
+        },
       };
       // axios
       //   .post("https://galactus.homingos.com/accounts/send_otp", data)
@@ -89,16 +100,15 @@ const Login = () => {
       }
 
       async function changeroute() {
-        const response = await Apicall(sendOTPService, data).then(
+        const response = await Apicall(sendOTPService, encdata).then(
           (data) => data
         );
-        console.log(response,'two')
-        if(!response.error){
-          navigate('/otp')
+        console.log(response, "two");
+        if (!response.error) {
+          navigate("/otp");
         }
       }
       changeroute();
-      
     } else {
       console.log("ERROR");
       message.error("Please enter a valid phone number");

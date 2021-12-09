@@ -91,19 +91,23 @@ export function Otp({
   //     history.replace(routeConstants.login.route);
   //   }
   // }, [otpData]);
-  
+
   const onCloseHeader = () => {
     // dispatchClearOtpData();
     dispatch({ type: "clear" });
     navigate("/");
   };
+
   const verifyOtp = () => {
-    if (otp.length === 4) {
+    if (otp.length === 5) {
       const data = {
-        phone_number: Number(otpData?.phone_number),
-        country_code: otpData?.country_code,
-        otp: otp,
-        callback: "Nothing",
+        data: {
+          phoneNumber: otpData.phoneNumber,
+          countryCode: otpData.countryCode,
+          otp: otp,
+          deviceType: "UNITY",
+          source: "MAGIC",
+        },
       };
       // axios
       //   .post("https://galactus.homingos.com/accounts/check_otp", data)
@@ -131,6 +135,7 @@ export function Otp({
       async function changeroute() {
         let value = await Apicall(verifyOTPService, data).then((data) => data);
         if (!value.error) {
+          console.log('VERIFIED')
           if (window.vuplex) {
             send();
           } else {
@@ -148,23 +153,28 @@ export function Otp({
       }
       changeroute();
     } else {
-      message.error("Enter OTP!");
+      message.error({content:'Invalid OTP',duration:2});
     }
   };
 
   const resendOtp = () => {
     const data = {
-      phone_number: otpData?.phone_number,
-      country_code: otpData?.country_code,
+      data: {
+        phoneNumber: otpData.phoneNumber,
+        countryCode: otpData.countryCode,
+        otp: otp,
+        deviceType: "UNITY",
+        source: "MAGIC",
+      },
     };
-    axios
-      .post("https://galactus.homingos.com/accounts/resend_otp", data)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        message.error(error);
-      });
+    // axios
+    //   .post("https://galactus.homingos.com/accounts/resend_otp", data)
+    //   .then(function (response) {
+    //     console.log(response);
+    //   })
+    //   .catch(function (error) {
+    //     message.error({content:'asdasda',duration:'2'});
+    //   });
   };
 
   return (
