@@ -1,33 +1,32 @@
 const initialState = {
-  call: "false",
-  data: "",
+  data: [],
   otpData: [],
   userProfile: [],
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case "call":
-      return {
-        ...state,
-        call: action.data,
-      };
-    case "page1":
-      return {
-        data: action.data,
-      };
-    case "page2":
-      return {
-        data: action.data,
-      };
-    case "page3":
-      return {
-        data: action.data,
-      };
-    case "endpage":
-      return {
-        data: action.data,
-      };
+    // case "call":
+    //   return {
+    //     ...state,
+    //     call: action.data,
+    //   };
+    // case "page1":
+    //   return {
+    //     data: action.data,
+    //   };
+    // case "page2":
+    //   return {
+    //     data: action.data,
+    //   };
+    // case "page3":
+    //   return {
+    //     data: action.data,
+    //   };
+    // case "endpage":
+    //   return {
+    //     data: action.data,
+    //   };
     case "otpData":
       return {
         ...state,
@@ -37,6 +36,10 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         userProfile: action.data,
+      };
+    case "Logout":
+      return {
+        state,
       };
     default:
       return state;

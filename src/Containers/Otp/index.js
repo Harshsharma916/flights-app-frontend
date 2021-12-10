@@ -44,7 +44,7 @@ const Wrapper = styled.div`
 
 const Button = styled.button`
   color: white;
-  background: #24a0ed;
+  background: black;
   padding: 8px 15px;
   font-size: 16px;
   border-radius: 5px;
@@ -135,7 +135,8 @@ export function Otp({
       async function changeroute() {
         let value = await Apicall(verifyOTPService, data).then((data) => data);
         if (!value.error) {
-          console.log('VERIFIED')
+          dispatch({ type: "userProfile", data: value.data });
+          console.log("VERIFIED");
           if (window.vuplex) {
             send();
           } else {
@@ -148,12 +149,12 @@ export function Otp({
               message: "OTP verified",
             });
           }
-          // navigate("/page1");
+          navigate("/profile");
         }
       }
       changeroute();
     } else {
-      message.error({content:'Invalid OTP',duration:2});
+      message.error({ content: "Invalid OTP", duration: 2 });
     }
   };
 

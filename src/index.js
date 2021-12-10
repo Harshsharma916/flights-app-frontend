@@ -11,7 +11,11 @@ import reducer from "./Containers/reducer";
 
 const persistedState = localStorage.getItem("reduxState")
   ? JSON.parse(localStorage.getItem("reduxState"))
-  : {};
+  : {
+      data: "",
+      otpData: [],
+      userProfile: [],
+    };
 
 const store = createStore(
   reducer,
@@ -19,19 +23,19 @@ const store = createStore(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-store.subscribe(()=>{
-  localStorage.setItem('reduxState', JSON.stringify(store.getState()))
-})
+store.subscribe(() => {
+  localStorage.setItem("reduxState", JSON.stringify(store.getState()));
+});
 
 ReactDOM.render(
   <Provider store={store}>
-    {/* <BrowserRouter> */}
-    <HashRouter>
+    <BrowserRouter>
+      {/* <HashRouter> */}
       {/* <React.StrictMode> */}
       <App />
       {/* </React.StrictMode> */}
-    </HashRouter>
-    {/* </BrowserRouter> */}
+      {/* </HashRouter> */}
+    </BrowserRouter>
   </Provider>,
   document.getElementById("root")
 );

@@ -19,7 +19,7 @@ function Otp({ otp, setOtp, otpError, borderColor = '#24A0ED' }) {
         width: '3rem',
         height: '3rem',
         borderRadius: '0.5rem',
-        border: `1px solid ${borderColor}`,
+        border: `1px solid black`,
       }}
       value={otp}
       onChange={setOtp}
