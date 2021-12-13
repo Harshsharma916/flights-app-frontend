@@ -9,6 +9,7 @@ const Div = styled.div`
   margin: 0px;
   overflow-x: none;
   overflow-y: none;
+  position: relative;
 `
 
 function App() {

@@ -148,13 +148,18 @@ export function Otp({
               type: "OTP verification",
               message: "OTP verified",
             });
+            window.vuplex.postMessage({
+              type: "User profile",
+              message: value.data,
+            });
           }
           navigate("/profile");
         }
       }
       changeroute();
     } else {
-      message.error({ content: "Invalid OTP", duration: 2 });
+      // message.error({ content: "Invalid OTP", duration: 2 });
+      
     }
   };
 
