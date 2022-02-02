@@ -6,45 +6,36 @@
 
 import React, { memo, useState, useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
-import T from "../../Components/T";
 import { useNavigate } from "react-router-dom";
-// import routeConstants from '@app/utils/routeConstants';
-// import { Helmet } from 'react-helmet';
-// import CloseHeader from '@app/components/CloseHeader/index';
-// import BackIcon from 'images/back.svg';
-// import { loginCreators } from "../Login/reducer";
-// import { Heading } from 'Containers/Login/index';
 import styled from "styled-components";
-// import { Wrapper, colors } from "@app/themes";
 import CardDefault from "../../Components/CardDefault/index";
 import OTP from "../../Components/Otp";
-import { message } from "antd";
-// import { otpCreators } from "./reducer";
-// import { OTP_LENGTH } from "@app/utils/constants";
-// import { selectToken } from '../App/selectors';
 import OtpTimer from "otp-timer";
-import axios from "axios";
 import { useSelector } from "react-redux";
-import { Apicall } from "../../Components/Apicaller";
+import axios from "axios";
 import {
   checkPinCodeService,
   verifyOTPService,
 } from "../../services/user-services";
-import { SendMessageToCSharp } from "../../Components/Unitysendmsg";
-import { ReceieveMsgFromCSharp } from "../../Components/Unityrecievemsg";
+import { Body, Wrapper } from "../../Components/ExportStyles";
+import LogoHeader from "../../Components/LogoHeader";
+import { AxiosPost } from "../../Components/Apicaller";
 
-const Wrapper = styled.div`
+const Card = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
-  // background-color: black;
+  padding: 1.5rem;
+  width: 500px;
+  // height: 400px;
+  background: linear-gradient(#318ce7, #00308f);
+  border-radius: 8px;
 `;
 
 const Button = styled.button`
   color: white;
-  background: black;
+  background: linear-gradient(to left, #318ce7, #00308f);
   padding: 8px 15px;
   font-size: 16px;
   border-radius: 5px;
@@ -64,34 +55,24 @@ const ResendB = styled.button`
   padding: 2px 5px;
   border: none;
 `;
-export function Otp({
-  otpError,
-  otpResponse,
-  dispatchClearOtpData,
-  loading,
-  dispatchSubmitOtp,
-  dispatchResendOtp,
-  dispatchWebEngage,
-  otpFailure,
-  token,
-}) {
+
+export function Otp({ otpFailure }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [otp, setOtp] = useState("");
+  const [otpVal, setOtpVal] = useState(0);
+  const [loader, setloader] = useState(false);
   const otpData = useSelector((state) => state.otpData);
-  console.log(otpData);
 
-  // useEffect(() => {
-  //   if (token) {
-  //     history.replace(routeConstants.addVideos.route);
-  //   }
-  // }, [token]);
-  // useEffect(() => {
-  //   if (!otpData?.phoneNumber) {
-  //     history.replace(routeConstants.login.route);
-  //   }
-  // }, [otpData]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/login/otp?number=${otpData.phoneNumber}`)
+      .then(function (response) {
+        setOtpVal(response.data.value);
+      });
+  }, []);
 
+  console.log(otpVal, "TOP");
   const onCloseHeader = () => {
     // dispatchClearOtpData();
     dispatch({ type: "clear" });
@@ -99,67 +80,35 @@ export function Otp({
   };
 
   const verifyOtp = () => {
-    if (otp.length === 5) {
+    if (otp.length === 4) {
       const data = {
-        data: {
-          phoneNumber: otpData.phoneNumber,
-          countryCode: otpData.countryCode,
-          otp: otp,
-          deviceType: "UNITY",
-          source: "MAGIC",
-        },
+        phoneNumber: otpData.phoneNumber,
+        countryCode: otpData.countryCode,
+        otp: otp,
       };
-      // axios
-      //   .post("https://galactus.homingos.com/accounts/check_otp", data)
-      //   .then(function (response) {
-      //     const { data, error } = response;
-      //     console.log(data,'DATA 1');
-      //     // console.log(ok);
-      //     if (!error) {
-      //       console.log('CHECKOTP')
-      //       // const { token, ...profile } = data.data;
-      //       // dispatch({ type: "otpData", data: { token: token } });
-      //       dispatch({ type: "userProfile", data: data.data });
-      //       navigate("/page1");
-      //     }
-      //   })
-      //   .catch(function (error) {
-      //     message.error(error);
-      //   });
-      // const response = ReceieveMsgFromCSharp();
-      // console.log(response?.otpverified);
-      // if(response?.otpverified){
-      //   navigate('/page1')
-      // }
+      console.log(data, "INSIDE SEND OTP");
 
-      async function changeroute() {
-        let value = await Apicall(verifyOTPService, data).then((data) => data);
-        if (!value.error) {
-          dispatch({ type: "userProfile", data: value.data });
-          console.log("VERIFIED");
-          if (window.vuplex) {
-            send();
+      async function Otpvalidation() {
+        const otpResponse = await AxiosPost("/login/otp", { Otp: data.otp });
+        // console.log(otpResponse);
+        if (otpResponse.statusText == "OK") {
+          console.log('for user details')
+          setloader(true);
+          const userResponse = await AxiosPost("/userdetails", {
+            phoneNumber: data.phoneNumber,
+          });
+          console.log(userResponse);
+          if (userResponse.data.dataRetrieved == true) {
+            dispatch({ type: "userDetails", data: userResponse?.data?.personData });
+            navigate("/homepage");
           } else {
-            window.addEventListener("vuplexready", send);
+            navigate("/userdetails");
           }
-
-          function send() {
-            window.vuplex.postMessage({
-              type: "OTP verification",
-              message: "OTP verified",
-            });
-            window.vuplex.postMessage({
-              type: "User profile",
-              message: value.data,
-            });
-          }
-          navigate("/profile");
         }
       }
-      changeroute();
+      Otpvalidation();
     } else {
       // message.error({ content: "Invalid OTP", duration: 2 });
-      
     }
   };
 
@@ -169,30 +118,33 @@ export function Otp({
         phoneNumber: otpData.phoneNumber,
         countryCode: otpData.countryCode,
         otp: otp,
-        deviceType: "UNITY",
-        source: "MAGIC",
       },
     };
-    // axios
-    //   .post("https://galactus.homingos.com/accounts/resend_otp", data)
-    //   .then(function (response) {
-    //     console.log(response);
-    //   })
-    //   .catch(function (error) {
-    //     message.error({content:'asdasda',duration:'2'});
-    //   });
   };
 
   return (
-    <Wrapper>
-      <CardDefault>
-        <P s="14px" w="400" onClick={onCloseHeader}>
-          {"<-  Change number"}
-        </P>
-        <OTP otpError={otpFailure} otp={otp} setOtp={setOtp} error={false} />
-        <OtpTimer seconds={0} minutes={2} resend={resendOtp} />
-        <Button onClick={verifyOtp}>Submit OTP</Button>
-      </CardDefault>
+    <Wrapper style={{ background: "white" }}>
+      <LogoHeader />
+      <Body>
+        <Card>
+          <CardDefault>
+            <P s="14px" w="400" onClick={onCloseHeader}>
+              {"<--  Change number"}
+            </P>
+            <P s="20px" w="500">
+              {otpVal}
+            </P>
+            <OTP
+              otpError={otpFailure}
+              otp={otp}
+              setOtp={setOtp}
+              error={false}
+            />
+            <OtpTimer seconds={0} minutes={1} resend={resendOtp} />
+            <Button onClick={verifyOtp}>Submit OTP</Button>
+          </CardDefault>
+        </Card>
+      </Body>
     </Wrapper>
   );
 }

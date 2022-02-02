@@ -7,15 +7,12 @@ import { HashRouter } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
-import reducer from "./Containers/reducer";
+import reducer,{initialState} from "./Containers/reducer";
+import "./fonts/blackpine-font/Blackpine-4BEVW.ttf";
 
 const persistedState = localStorage.getItem("reduxState")
   ? JSON.parse(localStorage.getItem("reduxState"))
-  : {
-      data: "",
-      otpData: [],
-      userProfile: [],
-    };
+  : initialState;
 
 const store = createStore(
   reducer,
@@ -29,13 +26,13 @@ store.subscribe(() => {
 
 ReactDOM.render(
   <Provider store={store}>
-    {/* <BrowserRouter> */}
-      <HashRouter>
+    <BrowserRouter>
+      {/* <HashRouter> */}
       {/* <React.StrictMode> */}
       <App />
       {/* </React.StrictMode> */}
-      </HashRouter>
-    {/* </BrowserRouter> */}
+      {/* </HashRouter> */}
+    </BrowserRouter>
   </Provider>,
   document.getElementById("root")
 );

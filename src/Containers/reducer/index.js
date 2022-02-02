@@ -1,7 +1,8 @@
-const initialState = {
+export const initialState = {
   data: [],
   otpData: [],
-  userProfile: [],
+  userDetails: [],
+  flightCards: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -32,15 +33,23 @@ const reducer = (state = initialState, action) => {
         ...state,
         otpData: action.data,
       };
-    case "userProfile":
+    case "userDetails":
       return {
         ...state,
-        userProfile: action.data,
+        userDetails: action.data,
       };
-    case "Logout":
+    case "logout":
+      return initialState;
+    case "FlightCards":
       return {
-        state,
+        ...state,
+        flightCards: action.data,
       };
+    // case "clear":
+    //   return {
+    //     ...state,
+    //     initialState,
+    //   };
     default:
       return state;
   }

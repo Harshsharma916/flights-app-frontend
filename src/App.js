@@ -1,3 +1,4 @@
+import axios from "axios";
 import styled from "styled-components";
 // import Photopages from "./Containers/Photopages";
 import Main from "./Containers/Main";

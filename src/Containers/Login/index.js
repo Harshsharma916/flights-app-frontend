@@ -4,33 +4,31 @@ import axios from "axios";
 import { Col, message, Form } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Apicall } from "../../Components/Apicaller";
-import { sendOTPService } from "../../services/user-services";
-import { takeLatest, call, put, select } from "redux-saga/effects";
-import { SendMessageToCSharp } from "../../Components/Unitysendmsg";
+import { Apicall, AxiosPost } from "../../Components/Apicaller";
 import { encrypt } from "../../utils/encryption";
-import CustomSelect from "../../Components/CustomSelect";
-import CustomInput from "../../Components/CustomInput";
 import { renderSelectOptions } from "../../utils";
+import Error from "../../Components/Error";
+import { Body, Wrapper } from "../../Components/ExportStyles";
+import LogoHeader from "../../Components/LogoHeader";
 
-const Wrapper = styled.div`
+const Card = styled.div`
   display: flex;
   flex-direction: column;
-  // width: 250px;
-  // height: 500px;
+  width: 500px;
   justify-content: space-around;
   // align-items: center;
-  // background: #1111;
+  background: white;
   border-radius: 5px;
-  padding: 20px;
+  padding: 30px;
   margin: 20px;
+  position: relative;
 `;
 
 const Inputdiv = styled.div`
   border-radius: 7px;
   border: 0.7px solid grey;
   margin: 30px 0px;
-  width: 95%;
+  // width: 95%;
 
   .input1 {
     padding: 15px 0px 15px 15px;
@@ -43,7 +41,7 @@ const Inputdiv = styled.div`
   }
 
   .input2 {
-    width: 94%;
+    width: 97%;
     padding: 15px 0px 15px 15px;
     // box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 10px;
     border: none;
@@ -69,18 +67,11 @@ const Button = styled.div`
   // width: 100px;
   text-align: center;
   padding: 10px 0px;
-  background: black;
+  background: linear-gradient(to left,#318ce7, #00308f);
   color: white;
   font-size: 14px;
   font-weight: 500;
   // border-radius: 4px;
-`;
-
-const Row = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 100%;
 `;
 
 const Login = () => {
@@ -89,7 +80,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [form] = Form.useForm();
-  const [countryCode,setCountryCode] = useState('+91');
+  const [countryCode, setCountryCode] = useState("+91");
 
   useEffect(() => {
     if (state?.userProfile?.token) {
@@ -152,13 +143,13 @@ const Login = () => {
   ];
 
   function sendotp() {
-    if (Number.isInteger(parseInt(number))) {
+    if (Number.isInteger(parseInt(number)) && number.length == 10) {
       // window.caches.open().then((cache) => {
       //   cache.put('https://localhost:3000',number);
       //   alert('Data Added into cache!')
       // });
-      console.log("SENT",countryCode);
-      
+      console.log("SENT", countryCode);
+
       const data = {
         phoneNumber: number,
         countryCode: countryCode,
@@ -188,91 +179,56 @@ const Login = () => {
       //   });
       dispatch({ type: "otpData", data: data });
 
-      if (window.vuplex) {
-        send();
-      } else {
-        window.addEventListener("vuplexready", send);
-      }
-
-      function send() {
-        window.vuplex.postMessage({
-          type: "Login",
-          message: data,
-        });
-      }
-
       async function changeroute() {
-        const response = await Apicall(sendOTPService, encdata).then(
-          (data) => data
-        );
+        // const response = await Apicall("http://localhost:5000/login", {
+        //   phoneNumber: data.phoneNumber,
+        // }).then((data) => data);
+        const response = await AxiosPost('/login',{phoneNumber:data.phoneNumber})
         console.log(response, "two");
-        if (!response.error) {
+        if (response) {
           navigate("/otp");
         }
       }
       changeroute();
     } else {
       console.log("ERROR");
-      message.error("Please enter a valid phone number");
+      // message.error("Please enter a valid phone number");
+      <Error message="Please enter a valid phone number" />;
     }
   }
 
   return (
     <Wrapper>
-      <Title>LOGIN</Title>
-      <Subtitle>Login to access the flamCards and order new flamCards</Subtitle>
-      <Inputdiv>
-        <select
-          className="input1"
-          // dropdownStyle={{ minWidth: "300%" }}
-          // showArrow
-          // defaultValue={countries[0]?.code}
-          style={{ width: "100%" }}
-          placeholder={"Country Code"}
-          onChange={(e) => setCountryCode(e.target.value)}
-        >
-          {renderSelectOptions(countries)}
-        </select>
-        <input
-          className="input2"
-          value={number}
-          type=""
-          maxLength={10}
-          onChange={(e) => setNumber(e.target.value)}
-          placeholder="Your phone number"
-        />
-      </Inputdiv>
-      {/* <Form form={form}>
-        <Form.Item>
-          <Row>
-            <Form.Item style={{ width: "27.5%" }} name={"countryCode"}>
-              <CustomSelect
-                dropdownStyle={{ minWidth: "300%" }}
-                showArrow
-                defaultValue={countries[1]?.code}
-                style={{ width: "100%" }}
-                placeholder={"Country Code"}
-                optionFilterProp="children"
-              >
-                {renderSelectOptions(countries)}
-              </CustomSelect>
-            </Form.Item>
-            <Form.Item
-
-              style={{ width: "67.5%" }}
-              name={"mobileNumber"}
+      <LogoHeader showLoginButton={true}/>
+      <Body>
+        <Card>
+          <Title>LOGIN</Title>
+          <Subtitle>
+            Login to see the world fly with you 
+          </Subtitle>
+          <Inputdiv>
+            <select
+              className="input1"
+              // dropdownStyle={{ minWidth: "300%" }}
+              // showArrow
+              // defaultValue={countries[0]?.code}
+              style={{ width: "100%" }}
+              placeholder={"Country Code"}
+              onChange={(e) => setCountryCode(e.target.value)}
             >
-              <CustomInput
-                maxLength={10}
-                onPressEnter={sendotp}
-                type="tel"
-                placeholder={"Your phone number"}
-              />
-            </Form.Item>
-          </Row>
-        </Form.Item>
-      </Form> */}
-      <Button onClick={sendotp}>Send OTP</Button>
+              {renderSelectOptions(countries)}
+            </select>
+            <input
+              className="input2"
+              value={number}
+              maxLength={10}
+              onChange={(e) => setNumber(e.target.value)}
+              placeholder="Your phone number"
+            />
+          </Inputdiv>
+          <Button onClick={sendotp}>Send OTP</Button>
+        </Card>
+      </Body>
     </Wrapper>
   );
 };

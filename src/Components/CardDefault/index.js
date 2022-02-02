@@ -18,6 +18,8 @@ const Wrapper = styled.div`
   gap: 10px;
   // align-items: center;
   // justify-content: center;
+  border-radius: 8px;
+  background: white;
 `;
 
 function CardDefault({ children, style, onClick }) {
