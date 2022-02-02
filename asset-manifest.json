@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "/flights-app-frontend/static/css/main.e57254ac.chunk.css",
+    "main.js": "/flights-app-frontend/static/js/main.319a5816.chunk.js",
+    "main.js.map": "/flights-app-frontend/static/js/main.319a5816.chunk.js.map",
+    "runtime-main.js": "/flights-app-frontend/static/js/runtime-main.83dd81aa.js",
+    "runtime-main.js.map": "/flights-app-frontend/static/js/runtime-main.83dd81aa.js.map",
+    "static/js/2.fa0fbaa3.chunk.js": "/flights-app-frontend/static/js/2.fa0fbaa3.chunk.js",
+    "static/js/2.fa0fbaa3.chunk.js.map": "/flights-app-frontend/static/js/2.fa0fbaa3.chunk.js.map",
+    "static/js/3.05595231.chunk.js": "/flights-app-frontend/static/js/3.05595231.chunk.js",
+    "static/js/3.05595231.chunk.js.map": "/flights-app-frontend/static/js/3.05595231.chunk.js.map",
+    "index.html": "/flights-app-frontend/index.html",
+    "static/css/main.e57254ac.chunk.css.map": "/flights-app-frontend/static/css/main.e57254ac.chunk.css.map",
+    "static/js/2.fa0fbaa3.chunk.js.LICENSE.txt": "/flights-app-frontend/static/js/2.fa0fbaa3.chunk.js.LICENSE.txt",
+    "static/media/1.c6580ca2.png": "/flights-app-frontend/static/media/1.c6580ca2.png",
+    "static/media/10.7df733e4.jpg": "/flights-app-frontend/static/media/10.7df733e4.jpg",
+    "static/media/2.8e826d64.png": "/flights-app-frontend/static/media/2.8e826d64.png",
+    "static/media/3.1829465e.png": "/flights-app-frontend/static/media/3.1829465e.png",
+    "static/media/4.055e8d6b.png": "/flights-app-frontend/static/media/4.055e8d6b.png",
+    "static/media/index.css": "/flights-app-frontend/static/media/Blackpine-4BEVW.d0d6d742.ttf",
+    "static/media/User.816d7d33.png": "/flights-app-frontend/static/media/User.816d7d33.png",
+    "static/media/logo.7f433833.jpg": "/flights-app-frontend/static/media/logo.7f433833.jpg",
+    "static/media/profileimg.3b98e9c3.png": "/flights-app-frontend/static/media/profileimg.3b98e9c3.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.83dd81aa.js",
+    "static/js/2.fa0fbaa3.chunk.js",
+    "static/css/main.e57254ac.chunk.css",
+    "static/js/main.319a5816.chunk.js"
+  ]
+}
