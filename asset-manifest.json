@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/flights-app-frontend/static/css/main.e57254ac.chunk.css",
-    "main.js": "/flights-app-frontend/static/js/main.70f1878e.chunk.js",
-    "main.js.map": "/flights-app-frontend/static/js/main.70f1878e.chunk.js.map",
+    "main.js": "/flights-app-frontend/static/js/main.b8374f65.chunk.js",
+    "main.js.map": "/flights-app-frontend/static/js/main.b8374f65.chunk.js.map",
     "runtime-main.js": "/flights-app-frontend/static/js/runtime-main.83dd81aa.js",
     "runtime-main.js.map": "/flights-app-frontend/static/js/runtime-main.83dd81aa.js.map",
-    "static/js/2.f3513478.chunk.js": "/flights-app-frontend/static/js/2.f3513478.chunk.js",
-    "static/js/2.f3513478.chunk.js.map": "/flights-app-frontend/static/js/2.f3513478.chunk.js.map",
+    "static/js/2.2baacb81.chunk.js": "/flights-app-frontend/static/js/2.2baacb81.chunk.js",
+    "static/js/2.2baacb81.chunk.js.map": "/flights-app-frontend/static/js/2.2baacb81.chunk.js.map",
     "static/js/3.05595231.chunk.js": "/flights-app-frontend/static/js/3.05595231.chunk.js",
     "static/js/3.05595231.chunk.js.map": "/flights-app-frontend/static/js/3.05595231.chunk.js.map",
     "index.html": "/flights-app-frontend/index.html",
     "static/css/main.e57254ac.chunk.css.map": "/flights-app-frontend/static/css/main.e57254ac.chunk.css.map",
-    "static/js/2.f3513478.chunk.js.LICENSE.txt": "/flights-app-frontend/static/js/2.f3513478.chunk.js.LICENSE.txt",
+    "static/js/2.2baacb81.chunk.js.LICENSE.txt": "/flights-app-frontend/static/js/2.2baacb81.chunk.js.LICENSE.txt",
     "static/media/1.c6580ca2.png": "/flights-app-frontend/static/media/1.c6580ca2.png",
     "static/media/10.7df733e4.jpg": "/flights-app-frontend/static/media/10.7df733e4.jpg",
     "static/media/2.8e826d64.png": "/flights-app-frontend/static/media/2.8e826d64.png",
@@ -24,8 +24,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.83dd81aa.js",
-    "static/js/2.f3513478.chunk.js",
+    "static/js/2.2baacb81.chunk.js",
     "static/css/main.e57254ac.chunk.css",
-    "static/js/main.70f1878e.chunk.js"
+    "static/js/main.b8374f65.chunk.js"
   ]
 }
