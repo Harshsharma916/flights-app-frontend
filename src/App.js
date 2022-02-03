@@ -1,5 +1,6 @@
 import axios from "axios";
 import styled from "styled-components";
+import Login from "./Containers/Login";
 // import Photopages from "./Containers/Photopages";
 import Main from "./Containers/Main";
 
@@ -17,7 +18,9 @@ function App() {
 
   return (
     <Div>
-      <Main/>
+      {/* <Main/> */}
+      {/* <Login/> */}
+      harsh
     </Div>
   );
 }
