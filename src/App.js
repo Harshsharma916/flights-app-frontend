@@ -18,9 +18,9 @@ function App() {
 
   return (
     <Div>
-      {/* <Main/> */}
+      <Main/>
       {/* <Login/> */}
-      harsh
+      harsh sharma
     </Div>
   );
 }
