@@ -19,8 +19,6 @@ function App() {
   return (
     <Div>
       <Main/>
-      <Login/>
-      harsh sharma
     </Div>
   );
 }
