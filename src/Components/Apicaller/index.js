@@ -26,14 +26,14 @@ import { useDispatch } from "react-redux";
 // }
 
 export async function AxiosGet(url) {
-  const response = await axios.get(`https://flights-backend-app.herokuapp.com/${url}`);
+  const response = await axios.get(`https://flights-backend-app.herokuapp.com${url}`);
   if (response) {
     return response;
   }
 }
 
 export async function AxiosPost(url,data){
-  const response = await axios.post(`https://flights-backend-app.herokuapp.com/${url}`,data)
+  const response = await axios.post(`https://flights-backend-app.herokuapp.com${url}`,data)
   if (response) {
     return response;
   }

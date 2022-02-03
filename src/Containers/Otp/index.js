@@ -66,7 +66,7 @@ export function Otp({ otpFailure }) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/login/otp?number=${otpData.phoneNumber}`)
+      .get(`https://flights-backend-app.herokuapp.com/login/otp?number=${otpData.phoneNumber}`)
       .then(function (response) {
         setOtpVal(response.data.value);
       });
