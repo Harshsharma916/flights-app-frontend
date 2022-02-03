@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/flights-app-frontend/static/css/main.e57254ac.chunk.css",
-    "main.js": "/flights-app-frontend/static/js/main.d12787dc.chunk.js",
-    "main.js.map": "/flights-app-frontend/static/js/main.d12787dc.chunk.js.map",
+    "main.js": "/flights-app-frontend/static/js/main.2fe12d6a.chunk.js",
+    "main.js.map": "/flights-app-frontend/static/js/main.2fe12d6a.chunk.js.map",
     "runtime-main.js": "/flights-app-frontend/static/js/runtime-main.5757e2e0.js",
     "runtime-main.js.map": "/flights-app-frontend/static/js/runtime-main.5757e2e0.js.map",
     "static/js/2.f5da5fc0.chunk.js": "/flights-app-frontend/static/js/2.f5da5fc0.chunk.js",
@@ -26,6 +26,6 @@
     "static/js/runtime-main.5757e2e0.js",
     "static/js/2.f5da5fc0.chunk.js",
     "static/css/main.e57254ac.chunk.css",
-    "static/js/main.d12787dc.chunk.js"
+    "static/js/main.2fe12d6a.chunk.js"
   ]
 }
