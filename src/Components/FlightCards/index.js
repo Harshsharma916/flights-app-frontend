@@ -1,6 +1,6 @@
 import { memo } from "react";
 import styled from "styled-components";
-import Cardbg from "../../Images/4.png";
+// import Cardbg from "./../Assets/Images/4.png";
 import { Text } from "../ExportStyles";
 
 const Wrapper = styled.div`

@@ -1,19 +1,25 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  height: 100vh;
+  height: 90vh;
   display: flex;
   flex-direction: column;
   position: relative;
   background: linear-gradient(#318ce7, #00308f);
-  
+  // background-image: url(${props => props.bgImg});
+  // background-repeat: no-repeat;
+  // background-size: cover;
+  // background-position: bottom 10% right 40%;
+  // background-image-filter: blur(2px);
+
   .BgImg {
     position: absolute;
-    z-index: -1;
-    width: 100vw;
-    height: 100vh;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     filter: blur(2px);
+    top: 0px;
   }
 `;
 

@@ -2,28 +2,6 @@ import { message } from "antd";
 import { takeLatest, call, put, select } from "redux-saga/effects";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-// import { sendOTPService, verifyOTPService } from '../../services/user-services';
-
-// export function Apicall(url, datain, dispatch ){
-//   console.log(url);
-//   axios
-//     .post(url, datain)
-//     .then(function (response) {
-//       console.log(response);
-//       const { data, ok } = response;
-//       console.log(data);
-
-//       if (!data.error) {
-//         console.log("INSIDE API");
-//         // dispatch({ type: dispatchtype, data: data });
-//         dispatch({ type: "call", data: "true" });
-//         // navigate(page);
-//       }
-//     })
-//     .catch(function (error) {
-//       message.error(error);
-//     });
-// }
 
 export async function AxiosGet(url) {
   const response = await axios.get(`https://flights-backend-app.herokuapp.com${url}`);

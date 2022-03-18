@@ -2,13 +2,10 @@ import { useState } from "react";
 import styled from "styled-components";
 import { AxiosPost } from "../../Components/Apicaller";
 import { Body, Button, Text, Wrapper } from "../../Components/ExportStyles";
-import LogoHeader from "../../Components/LogoHeader";
+import LogoHeader from "../../Components/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-// const UserWrapper = styled(Wrapper)`
-//   background: linear-gradient(#318ce7, #00308f);
-// `;
+import { userDetails } from "../../redux/reducer";
 
 const Card = styled.div`
   display: flex;
@@ -34,7 +31,7 @@ const UserDetails = () => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const dispatch = useDispatch();
-  const otpData = useSelector((state) => state.otpData);
+  const otpData = useSelector((state) => state.user.otpData);
   const navigate = useNavigate();
 
   async function submitData() {
@@ -47,7 +44,7 @@ const UserDetails = () => {
         name: name,
         email: email,
       };
-      dispatch({ type: "userDetails", data: data });
+      dispatch(userDetails(data));
       let response = await AxiosPost("/userdetails?upload=true", data);
       console.log(response, "RESPONSE");
       if (response.statusText == "OK") {
@@ -59,7 +56,7 @@ const UserDetails = () => {
 
   return (
     <Wrapper>
-      <LogoHeader />
+      {/* <LogoHeader /> */}
       <Body>
         <Card>
           <Text size="28px" weight="100" style={{ marginBottom: "15px" }}>

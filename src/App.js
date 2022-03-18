@@ -1,12 +1,9 @@
-import axios from "axios";
 import styled from "styled-components";
-import Login from "./Containers/Login";
-// import Photopages from "./Containers/Photopages";
+import LogoHeader from "./Components/Header";
 import Main from "./Containers/Main";
+import { useSelector } from "react-redux";
 
 const Div = styled.div`
-  // height: 100vw;
-  // width: 100vw;
   padding: 0px;
   margin: 0px;
   overflow-x: none;
@@ -15,9 +12,11 @@ const Div = styled.div`
 `
 
 function App() {
+  const userDetails = useSelector((state) => state?.user?.userDetails);
 
   return (
     <Div>
+      <LogoHeader showLogoutButton={true} userName={userDetails[0]?.name} showLoginButton={true}/>
       <Main/>
     </Div>
   );

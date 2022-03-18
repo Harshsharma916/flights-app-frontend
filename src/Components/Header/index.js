@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { Button } from "../ExportStyles";
 import { Text } from "../ExportStyles";
-import Logo from "../../Images/logo.jpg";
-import User from "../../Images/User.png";
+import Logo from "../../Assets/Images/logo.jpg";
+import User from "../../Assets/Images/User.png";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { clear } from "../../redux/reducer";
 
 const Div = styled.div`
   display: flex;
@@ -28,9 +29,9 @@ const Div = styled.div`
   }
 `;
 
-const LogoHeader = ({showLoginButton,showLogoutButton,userName}) => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+const LogoHeader = ({ showLoginButton, showLogoutButton, userName }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <Div>
@@ -40,7 +41,16 @@ const LogoHeader = ({showLoginButton,showLogoutButton,userName}) => {
       </Text>
       <div className="Logindiv">
         {showLoginButton && <Button>login</Button>}
-        {showLogoutButton && <Button onClick={() => dispatch({type:'logout'},navigate('/'))}>logout</Button>}
+        {showLogoutButton && (
+          <Button
+            onClick={() => {
+              dispatch(clear());
+              navigate("/");
+            }}
+          >
+            logout
+          </Button>
+        )}
         <img src={User} className="Userimg" />
       </div>
     </Div>

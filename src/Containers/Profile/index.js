@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import profileimg from "../../Images/profileimg.png";
+import profileimg from "../../Assets/Images/profileimg.png";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -67,16 +67,6 @@ const dispatch = useDispatch();
     }
   }, [userProfile,otpData]);
 
-//   const buttons = [
-//     { id: 0, name: "Refer and Earn", img: { img0 } },
-//     { id: 1, name: "Order FlamCard", img: { img1 } },
-//     { id: 2, name: "My Orders", img: { img2 } },
-//     { id: 3, name: "My Instant FlamCards", img: { img3 } },
-//     { id: 4, name: "Show Scans", img: { img4 } },
-//     { id: 5, name: "Help", img: { img5 } },
-//     { id: 6, name: "Rate Us", img: { img6 } },
-//     { id: 7, name: "Logout", img: { img7 } },
-//   ];
   const buttons = [
     { id: 0, name: "Refer and Earn" },
     { id: 1, name: "Order FlamCard" },

@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import { Col, message, Form } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Apicall, AxiosPost } from "../../Components/Apicaller";
-import { encrypt } from "../../utils/encryption";
+// import { encrypt } from "../../utils/encryption";
 import { renderSelectOptions } from "../../utils";
 import Error from "../../Components/Error";
 import { Body, Wrapper } from "../../Components/ExportStyles";
-import LogoHeader from "../../Components/LogoHeader";
+import LogoHeader from "../../Components/Header";
+import { otpData } from "../../redux/reducer";
 
 const Card = styled.div`
   display: flex;
@@ -64,30 +64,25 @@ const Subtitle = styled.p`
 `;
 
 const Button = styled.div`
-  // width: 100px;
   text-align: center;
-  padding: 10px 0px;
+  padding: 15px 0px;
   background: linear-gradient(to left,#318ce7, #00308f);
   color: white;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 500;
-  // border-radius: 4px;
+
+  :hover{
+    cursor: pointer;
+  }
 `;
 
 const Login = () => {
-  const state = useSelector((state) => state);
+  // const state = useSelector((state) => state);
   const [number, setNumber] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [countryCode, setCountryCode] = useState("+91");
-
-  useEffect(() => {
-    if (state?.userProfile?.token) {
-      // console.log(token);
-      navigate("/page1");
-    }
-  }, []);
 
   const countries = [
     {
@@ -144,10 +139,6 @@ const Login = () => {
 
   function sendotp() {
     if (Number.isInteger(parseInt(number)) && number.length == 10) {
-      // window.caches.open().then((cache) => {
-      //   cache.put('https://localhost:3000',number);
-      //   alert('Data Added into cache!')
-      // });
       console.log("SENT", countryCode);
 
       const data = {
@@ -155,34 +146,20 @@ const Login = () => {
         countryCode: countryCode,
       };
 
-      const encryptedNumber = encrypt(
-        `${data.phoneNumber}|${Date.now() + 30000}`
-      );
-      console.log("ENCRYPTED_NUMBER", encryptedNumber, encryptedNumber.length);
-      const encdata = {
-        data: {
-          // phone_number: Number(action.data?.phoneNumber),
-          phoneNumber: encryptedNumber,
-          countryCode: data.countryCode,
-        },
-      };
-      // axios
-      //   .post("https://galactus.homingos.com/accounts/send_otp", data)
-      //   .then(function (response) {
-      //     // console.log(response);
-      //     dispatch({ type: "otpData", data: data });
-      //     console.log('HARSH SHARMA')
-      //     navigate("/otp");
-      //   })
-      //   .catch(function (error) {
-      //     message.error("Something went wrong");
-      //   });
-      dispatch({ type: "otpData", data: data });
+      // const encryptedNumber = encrypt(
+      //   `${data.phoneNumber}|${Date.now() + 30000}`
+      // );
+      // console.log("ENCRYPTED_NUMBER", encryptedNumber, encryptedNumber.length);
+      // const encdata = {
+      //   data: {
+      //     // phone_number: Number(action.data?.phoneNumber),
+      //     phoneNumber: encryptedNumber,
+      //     countryCode: data.countryCode,
+      //   },
+      // };
+      dispatch(otpData(data));
 
       async function changeroute() {
-        // const response = await Apicall("http://localhost:5000/login", {
-        //   phoneNumber: data.phoneNumber,
-        // }).then((data) => data);
         const response = await AxiosPost('/login',{phoneNumber:data.phoneNumber})
         console.log(response, "two");
         if (response) {
@@ -192,14 +169,13 @@ const Login = () => {
       changeroute();
     } else {
       console.log("ERROR");
-      // message.error("Please enter a valid phone number");
       <Error message="Please enter a valid phone number" />;
     }
   }
 
   return (
     <Wrapper>
-      <LogoHeader showLoginButton={true}/>
+      {/* <LogoHeader showLoginButton={true}/> */}
       <Body>
         <Card>
           <Title>LOGIN</Title>
@@ -209,9 +185,6 @@ const Login = () => {
           <Inputdiv>
             <select
               className="input1"
-              // dropdownStyle={{ minWidth: "300%" }}
-              // showArrow
-              // defaultValue={countries[0]?.code}
               style={{ width: "100%" }}
               placeholder={"Country Code"}
               onChange={(e) => setCountryCode(e.target.value)}

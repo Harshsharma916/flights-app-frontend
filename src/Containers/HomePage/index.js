@@ -3,26 +3,29 @@ import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import FlightCards, { Text } from "../../Components/FlightCards";
 import { memo, useState,useEffect } from "react";
 import "./test.scss";
-import BgImg from "../../Images/10.jpg";
+import BgImg from "../../Assets/Images/10.jpg";
 // import Logo from "../../Images/logo.jpg";
 // import User from "../../Images/User.png";
 import { useDispatch, useSelector } from "react-redux";
 import { AxiosGet } from "../../Components/Apicaller";
 import { Wrapper,Body } from "../../Components/ExportStyles";
-import LogoHeader from "../../Components/LogoHeader";
+import LogoHeader from "../../Components/Header";
+import { allFlights } from "../../redux/reducer";
 
-const Header = styled.div`
+const Optionsdiv = styled.div`
   display: flex;
   gap: 10px;
   // align-item: center;
   justify-content: center;
   margin-top: 10px;
+  z-index: ;
 `;
 
 const CardBody = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
+  z-index: 2;
 
   .Arrow {
     padding: 10px;
@@ -40,8 +43,8 @@ const CardBody = styled.div`
 const HomePage = () => {
 
   const dispatch = useDispatch();
-  const flightCards = useSelector((state) => state.flightCards);
-  const userDetails = useSelector((state) => state.userDetails);
+  const flightCards = useSelector((state) => state.flightsInfo?.allFlights);
+  const userDetails = useSelector((state) => state.user.userDetails);
   const [category, setCategory] = useState("All");
   const [sort, setSort] = useState("Low-to-High");
   const [journeyfrom, setJourneyFrom] = useState("Delhi");
@@ -60,8 +63,8 @@ const HomePage = () => {
       flightsInfo = await AxiosGet("/flights?sort=high")
     }
 
-    dispatch({ type: "FlightCards", data: flightsInfo.data });
-    return flightsInfo.data;
+    dispatch(allFlights(flightsInfo?.data));
+    return flightsInfo?.data;
   }
 
   const Options = [
@@ -86,10 +89,11 @@ const HomePage = () => {
   ];
 
   return (
+    <>
+    {/* <LogoOptionsdiv showLogoutButton={true} userName={userDetails[0]?.name}/> */}
     <Wrapper>
       <img src={BgImg} className="BgImg" />
-      <LogoHeader showLogoutButton={true} userName={userDetails[0]?.name}/>
-      <Header>
+      <Optionsdiv>
         {Options.map((item, key) => {
           if (item.id == 2) {
             return (
@@ -135,7 +139,7 @@ const HomePage = () => {
             );
           }
         })}
-      </Header>
+      </Optionsdiv>
       <Body>
         <CardBody>
           <FiArrowLeft
@@ -170,6 +174,7 @@ const HomePage = () => {
         </CardBody>
       </Body>
     </Wrapper>
+    </>
   );
 };
 

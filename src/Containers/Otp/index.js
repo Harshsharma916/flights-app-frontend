@@ -1,9 +1,3 @@
-/**
- *
- * Otp
- *
- */
-
 import React, { memo, useState, useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -13,13 +7,10 @@ import OTP from "../../Components/Otp";
 import OtpTimer from "otp-timer";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import {
-  checkPinCodeService,
-  verifyOTPService,
-} from "../../services/user-services";
 import { Body, Wrapper } from "../../Components/ExportStyles";
-import LogoHeader from "../../Components/LogoHeader";
+import LogoHeader from "../../Components/Header";
 import { AxiosPost } from "../../Components/Apicaller";
+import { clear, userDetails } from "../../redux/reducer";
 
 const Card = styled.div`
   display: flex;
@@ -62,7 +53,7 @@ export function Otp({ otpFailure }) {
   const [otp, setOtp] = useState("");
   const [otpVal, setOtpVal] = useState(0);
   const [loader, setloader] = useState(false);
-  const otpData = useSelector((state) => state.otpData);
+  const otpData = useSelector((state) => state.user.otpData);
 
   useEffect(() => {
     axios
@@ -72,10 +63,9 @@ export function Otp({ otpFailure }) {
       });
   }, []);
 
-  console.log(otpVal, "TOP");
+  console.log(otpVal, "OTPVAL");
   const onCloseHeader = () => {
-    // dispatchClearOtpData();
-    dispatch({ type: "clear" });
+    dispatch(clear());
     navigate("/");
   };
 
@@ -99,7 +89,7 @@ export function Otp({ otpFailure }) {
           });
           console.log(userResponse);
           if (userResponse.data.dataRetrieved == true) {
-            dispatch({ type: "userDetails", data: userResponse?.data?.personData });
+            dispatch(userDetails(userResponse?.data?.personData));
             navigate("/homepage");
           } else {
             navigate("/userdetails");
@@ -124,7 +114,7 @@ export function Otp({ otpFailure }) {
 
   return (
     <Wrapper style={{ background: "white" }}>
-      <LogoHeader />
+      {/* <LogoHeader /> */}
       <Body>
         <Card>
           <CardDefault>

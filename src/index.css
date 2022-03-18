@@ -15,6 +15,6 @@ code {
 @font-face {
   font-family: "BlackpineRegular";
   src: local("BlackpineRegular"),
-    url("./fonts/blackpine-font/Blackpine-4BEVW.ttf") format("truetype");
+    url("./Assets/fonts/blackpine-font/Blackpine-4BEVW.ttf") format("truetype");
   font-weight: regular;
 }
